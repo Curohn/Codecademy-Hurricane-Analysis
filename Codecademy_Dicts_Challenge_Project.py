@@ -37,49 +37,75 @@ def convert_damages(damages):
 convert_damages(damages)
 
 
-# write your construct hurricane dictionary function here:
 
+
+# write your construct hurricane dictionary function here:
 def dict_constructer(names, months, years, max_sustained_winds, areas_affected, damages, deaths):
     hurricanes = {}
     for i in range(len(names)):
         hurricanes[names[i]] = {'Name': names[i], 'Month': months[i], 'Year': years[i], 'Max Sustained Wind': max_sustained_winds[i], 'Areas Affected': areas_affected[i], 'Damage': damages[i], 'Death': deaths[i]}
-    print(hurricanes.items())
+    #print(hurricanes.items())
 hurricanes_by_name = dict_constructer(names, months, years, max_sustained_winds, areas_affected, damages, deaths)
+
+
 
 
 # write your construct hurricane by year dictionary function here:
 def hurricanes_by_year_converter(hurricanes_by_name):
     hurricanes_by_year = {}
-    for i in range(len(hurricanes_by_name)):
-        hurricanes_by_year[i][3] = 
-
-
-
-
+    for name, month, year, max_sustained_wind, area_affected, damage, death in zip(names, months, years, max_sustained_winds, areas_affected, damages, deaths):
+        dict = {year: {"Name": name, "Month": month, "Year": year, "Max Sustained Wind Speed": max_sustained_wind, "Areas Affected": area_affected, "Damages": damage, "Deaths": death}}
+        hurricanes_by_year.update(dict)
+    return hurricanes_by_year
+# print(hurricanes_by_year_converter(hurricanes_by_name))
 
 
 
 
 # write your count affected areas function here:
-
-
-
+areas_count = {}
+def areas_affected_counter(areas_affected):
+    for record in areas_affected:
+        for area in record:
+            if area not in areas_count:
+                areas_count[area] = 1
+            else:
+                areas_count[area] += 1
+    return areas_count
+print(areas_affected_counter(areas_affected))
 
 
 
 
 # write your find most affected area function here:
+def most_affected_area(areas_count):
 
+    most_affected_area = ''
+    most_affected_count = 0
 
-
+    for area in areas_count:
+        if areas_count[area] > most_affected_count:
+            most_affected_area = area
+            most_affected_count = areas_count[area]
+        else:
+            continue
+    
+    return most_affected_area, most_affected_count
+print(most_affected_area(areas_count))
 
 
 
 
 # write your greatest number of deaths function here:
+def greatest_number_of_deaths(hurricanes_by_name):
+    most_deaths_count = 0
+    most_deaths_area = ''
 
-
-
+    for storm in hurricanes_by_name:
+        if storm.get("Deaths") > most_deaths_count:
+            most_deaths_count = storm.get("Deaths")
+            most_deaths_area = storm.
+print(greatest_number_of_deaths(hurricanes_by_name))
 
 
 
