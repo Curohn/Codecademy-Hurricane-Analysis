@@ -35,7 +35,7 @@ def convert_damages(damages):
         elif "B" in amount:
             updated_damages.append(float(amount.strip("B")) * conversion["B"])
     #print(updated_damages)
-convert_damages(damages)
+updated_damages = convert_damages(damages)
 
 
 # write your construct hurricane dictionary function here:
@@ -48,11 +48,12 @@ def dict_constructer(names, months, years, max_sustained_winds, areas_affected, 
                                 'Year': years[i], 
                                 'Max Sustained Wind': max_sustained_winds[i], 
                                 'Areas Affected': areas_affected[i], 
-                                'Damage': damages[i], 
+                                'Damage': updated_damages[i], 
                                 'Deaths': deaths[i]}
     return hurricanes
     #print(hurricanes.items())
 hurricanes_by_name = dict_constructer(names, months, years, max_sustained_winds, areas_affected, damages, deaths)
+"""In fixing/creating last func, I broke this somehow. Was updating it to take in the float values from updated_damages, instead of the str values in damages. Somehow this isn't working. Once I fix that, the categorize by damage function should be fixed"""
 
 
 # write your construct hurricane by year dictionary function here:
@@ -108,7 +109,7 @@ def greatest_number_of_deaths(hurricanes_by_name):
     #print(most_deaths_count, most_deaths_hurricane)
 
 
-# write your categorize by mortality function here:
+# write your catgeorize by mortality function here:
 def categorize_by_mortality(hurricanes_by_name):
     mortality_scale = {0: 0,
                        1: 100,
@@ -133,11 +134,37 @@ def categorize_by_mortality(hurricanes_by_name):
 
 # write your greatest damage function here:
 def greatest_damage(hurricanes_by_name):
-    
-
-
-
-
+    greatest_damage_cane = ""
+    greatest_damage_cost = ""
+    for hurricane in hurricanes_by_name:
+        if hurricanes_by_name[hurricane]['Damage'] == "Damages not recorded":
+            continue
+        elif hurricanes_by_name[hurricane]['Damage'] > greatest_damage_cost:
+            greatest_damage_cane = hurricanes_by_name[hurricane]['Name']
+            greatest_damage_cost = hurricanes_by_name[hurricane]['Damage']
 
 
 # write your catgeorize by damage function here:
+def categorize_by_damage(hurricanes_by_name):
+    damage_scale = {0: 0,
+                1: 100000000,
+                2: 1000000000,
+                3: 10000000000,
+                4: 50000000000}
+    hurricanes_by_damage = {0:[],1:[],2:[],3:[],4:[],5:[]}
+    for hurricane in hurricanes_by_name:
+        damage_cost = hurricanes_by_name[hurricane]['Damage']
+        if hurricanes_by_name[hurricane]['Damage'] == "Damages not recorded":
+            continue
+        elif damage_cost == damage_scale[0]:
+            hurricanes_by_damage[0].append(hurricanes_by_name[hurricane])
+        elif damage_cost > damage_scale[0] and damage_cost <= damage_scale[1]:
+            hurricanes_by_damage[1].append(hurricanes_by_name[hurricane])
+        elif damage_cost > damage_scale[1] and damage_cost <= damage_scale[2]:
+            hurricanes_by_damage[2].append(hurricanes_by_name[hurricane])
+        elif damage_cost > damage_scale[2] and damage_cost <= damage_scale[3]:
+            hurricanes_by_damage[2].append(hurricanes_by_name[hurricane])
+        elif damage_cost > damage_scale[3] and damage_cost <= damage_scale[4]:
+            hurricanes_by_damage[4].append(hurricanes_by_name[hurricane])
+    return hurricanes_by_damage
+print(categorize_by_damage(hurricanes_by_name))
