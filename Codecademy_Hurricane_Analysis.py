@@ -21,15 +21,12 @@ damages = ['Damages not recorded', '100M', 'Damages not recorded', '40M', '27.9M
 deaths = [90, 4000, 16, 3103, 179, 184, 408, 682, 5, 1023, 43, 319, 688, 259, 37, 11, 2068, 269, 318, 107, 65, 19325, 51, 124, 17, 1836, 125, 87, 45, 133, 603, 138, 3057, 74]
 
 
-
 # write your update damages function here:
 # function converts damages in mixed int/text format to float format by using conversion dict
 def convert_damages(damages):
-
     # use below conversion dict to multiply the formatted values in damages list
     conversion = {"M": 1000000, "B": 1000000000}
     updated_damages = []
-
     for amount in damages:
         if amount == 'Damages not recorded':
             updated_damages.append('Damages not recorded')
@@ -41,18 +38,21 @@ def convert_damages(damages):
 convert_damages(damages)
 
 
-
-
 # write your construct hurricane dictionary function here:
 # fuction constructs dict based on lists of values given
 def dict_constructer(names, months, years, max_sustained_winds, areas_affected, damages, deaths):
     hurricanes = {}
     for i in range(len(names)):
-        hurricanes[names[i]] = {'Name': names[i], 'Month': months[i], 'Year': years[i], 'Max Sustained Wind': max_sustained_winds[i], 'Areas Affected': areas_affected[i], 'Damage': damages[i], 'Death': deaths[i]}
+        hurricanes[names[i]] = {'Name': names[i], 
+                                'Month': months[i], 
+                                'Year': years[i], 
+                                'Max Sustained Wind': max_sustained_winds[i], 
+                                'Areas Affected': areas_affected[i], 
+                                'Damage': damages[i], 
+                                'Deaths': deaths[i]}
+    return hurricanes
     #print(hurricanes.items())
 hurricanes_by_name = dict_constructer(names, months, years, max_sustained_winds, areas_affected, damages, deaths)
-
-
 
 
 # write your construct hurricane by year dictionary function here:
@@ -63,9 +63,7 @@ def hurricanes_by_year_converter(hurricanes_by_name):
         dict = {year: {"Name": name, "Month": month, "Year": year, "Max Sustained Wind Speed": max_sustained_wind, "Areas Affected": area_affected, "Damages": damage, "Deaths": death}}
         hurricanes_by_year.update(dict)
     return hurricanes_by_year
-# print(hurricanes_by_year_converter(hurricanes_by_name))
-
-
+    #print(hurricanes_by_year_converter(hurricanes_by_name))
 
 
 # write your count affected areas function here:
@@ -79,18 +77,14 @@ def areas_affected_counter(areas_affected):
             else:
                 areas_count[area] += 1
     return areas_count
-print(areas_affected_counter(areas_affected))
-
-
+    #print(areas_affected_counter(areas_affected))
 
 
 # write your find most affected area function here:
 # iterates through new dict of areas and the number of times they've been affected and returns the most impacted area and count 
 def most_affected_area(areas_count):
-
     most_affected_area = ''
     most_affected_count = 0
-
     for area in areas_count:
         if areas_count[area] > most_affected_count:
             most_affected_area = area
@@ -99,36 +93,47 @@ def most_affected_area(areas_count):
             continue
     
     return most_affected_area, most_affected_count
-print(most_affected_area(areas_count))
-
-
+    #print(most_affected_area(areas_count))
 
 
 # write your greatest number of deaths function here:
-# in progress
 def greatest_number_of_deaths(hurricanes_by_name):
     most_deaths_count = 0
-    most_deaths_area = ''
-
-    for storm in hurricanes_by_name:
-        if storm.get("Deaths") > most_deaths_count:
-            most_deaths_count = storm.get("Deaths")
-            most_deaths_area = storm.
-print(greatest_number_of_deaths(hurricanes_by_name))
-
-
+    most_deaths_hurricane = ''
+    for hurricane in hurricanes_by_name:
+        if hurricanes_by_name[hurricane][deaths] > most_deaths_count:
+            most_deaths_count = hurricanes_by_name[hurricane]['Deaths']
+            most_deaths_hurricane = hurricane
+    return most_deaths_count, most_deaths_hurricane
+    #print(most_deaths_count, most_deaths_hurricane)
 
 
-# write your catgeorize by mortality function here:
-
-
-
-
-
+# write your categorize by mortality function here:
+def categorize_by_mortality(hurricanes_by_name):
+    mortality_scale = {0: 0,
+                       1: 100,
+                       2: 500,
+                       3: 1000,
+                       4: 10000}
+    hurricanes_by_mortality = {0:[], 1:[], 2:[], 3:[], 4:[]}
+    for hurricane in hurricanes_by_name:
+        num_deaths = hurricanes_by_name[hurricane]['Deaths']
+        if num_deaths == mortality_scale[0]:
+            hurricanes_by_mortality[0].append(hurricanes_by_name[hurricane])
+        elif num_deaths > mortality_scale[0] and num_deaths <= mortality_scale[1]:
+            hurricanes_by_mortality[1].append(hurricanes_by_name[hurricane])
+        elif num_deaths > mortality_scale[1] and num_deaths <= mortality_scale[2]:
+            hurricanes_by_mortality[2].append(hurricanes_by_name[hurricane])
+        elif num_deaths > mortality_scale[2] and num_deaths <= mortality_scale[3]:
+            hurricanes_by_mortality[2].append(hurricanes_by_name[hurricane])
+        elif num_deaths > mortality_scale[3] and num_deaths <= mortality_scale[4]:
+            hurricanes_by_mortality[4].append(hurricanes_by_name[hurricane])
+    return hurricanes_by_mortality
 
 
 # write your greatest damage function here:
-
+def greatest_damage(hurricanes_by_name):
+    
 
 
 
