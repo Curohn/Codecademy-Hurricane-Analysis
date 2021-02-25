@@ -34,6 +34,7 @@ def convert_damages(damages):
             updated_damages.append(float(amount.strip("M")) * conversion["M"])
         elif "B" in amount:
             updated_damages.append(float(amount.strip("B")) * conversion["B"])
+    return updated_damages
     #print(updated_damages)
 updated_damages = convert_damages(damages)
 
@@ -53,7 +54,6 @@ def dict_constructer(names, months, years, max_sustained_winds, areas_affected, 
     return hurricanes
     #print(hurricanes.items())
 hurricanes_by_name = dict_constructer(names, months, years, max_sustained_winds, areas_affected, damages, deaths)
-"""In fixing/creating last func, I broke this somehow. Was updating it to take in the float values from updated_damages, instead of the str values in damages. Somehow this isn't working. Once I fix that, the categorize by damage function should be fixed"""
 
 
 # write your construct hurricane by year dictionary function here:
